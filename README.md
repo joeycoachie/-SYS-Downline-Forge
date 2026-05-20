@@ -3,388 +3,252 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>THE M.O.E. GROUP - Downline Forge Tracker</title>
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+    <title>THE M.O.E. GROUP - Downline Forge System</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --gold: #D4AF37;
-            --marble-white: #F4F5F7;
-            --dark-slate: #1C2321;
-            --warm-light: #FDFBF7;
-            --border-color: rgba(212, 175, 55, 0.3);
-            --neon-green: #39FF14;
-        }
-
-        body {
-            font-family: 'Courier New', Courier, monospace;
-            background-color: var(--dark-slate);
-            color: var(--warm-light);
-            margin: 0;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .container {
-            width: 100%;
-            max-width: 950px;
-            background: linear-gradient(145deg, #151a19, #222b29);
-            border: 2px solid var(--gold);
-            box-shadow: 0 0 20px rgba(214, 175, 55, 0.15);
-            padding: 25px;
-            border-radius: 4px;
-        }
-
-        .header {
-            text-align: center;
-            border-bottom: 2px dashed var(--gold);
-            padding-bottom: 15px;
-            margin-bottom: 20px;
-        }
-
-        .header h1 {
-            margin: 0;
-            font-size: 24px;
-            letter-spacing: 4px;
-            color: var(--gold);
-            text-shadow: 0 0 10px rgba(214, 175, 55, 0.3);
-        }
-
-        .header p {
-            margin: 5px 0 0 0;
-            font-size: 14px;
-            opacity: 0.8;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 10px;
-            background-color: rgba(0, 0, 0, 0.2);
-        }
-
-        th, td {
-            border: 1px solid var(--border-color);
-            padding: 12px;
-            text-align: center;
-            font-size: 13px;
-        }
-
-        th {
-            background-color: rgba(212, 175, 55, 0.1);
-            color: var(--gold);
-            font-weight: bold;
-            letter-spacing: 1px;
-        }
-
-        tr:hover {
-            background-color: rgba(212, 175, 55, 0.05);
-        }
-
-        .editable {
-            background-color: rgba(255, 255, 255, 0.05);
-            border: 1px dashed transparent;
-            border-radius: 3px;
-            padding: 6px;
-            color: var(--warm-light);
-            font-weight: bold;
-            text-align: center;
-            width: 80%;
-            margin: 0 auto;
-            transition: all 0.3s;
-        }
-
-        .editable:focus {
-            outline: none;
-            border-color: var(--gold);
-            background-color: rgba(0, 0, 0, 0.5);
-            box-shadow: 0 0 8px rgba(214, 175, 55, 0.4);
-        }
-
-        select.editable-select {
-            background-color: #222b29;
-            border: 1px solid var(--border-color);
-            cursor: pointer;
-            width: 90%;
-        }
-
-        .status-badge {
-            display: inline-block;
-            padding: 4px 8px;
-            border-radius: 3px;
-            font-size: 11px;
-            text-transform: uppercase;
-            font-weight: bold;
-            letter-spacing: 1px;
-        }
-
-        .status-srank {
-            background-color: rgba(57, 255, 20, 0.2);
-            color: var(--neon-green);
-            border: 1px solid var(--neon-green);
-            text-shadow: 0 0 5px rgba(57, 255, 20, 0.5);
-        }
-
-        .status-standard {
-            background-color: rgba(214, 175, 55, 0.2);
-            color: var(--gold);
-            border: 1px solid var(--gold);
-        }
-
-        .status-warn {
-            background-color: rgba(255, 57, 57, 0.2);
-            color: #ff3939;
-            border: 1px solid #ff3939;
-        }
-
-        .progress-bar-container {
-            width: 100%;
-            background-color: rgba(255, 255, 255, 0.1);
-            height: 8px;
-            border-radius: 4px;
-            margin-top: 6px;
-            overflow: hidden;
-            border: 1px solid rgba(255,255,255,0.05);
-        }
-
-        .progress-bar {
-            height: 100%;
-            background: linear-gradient(90deg, var(--gold), var(--neon-green));
-            width: 0%;
-            transition: width 0.5s ease-in-out;
-        }
-
-        .totals-row {
-            background-color: rgba(212, 175, 55, 0.15) !important;
-            font-weight: bold;
-        }
-
-        .totals-row td {
-            color: var(--gold);
-            border-top: 2px double var(--gold);
-        }
-
-        .controls {
-            margin-top: 20px;
-            display: flex;
-            justify-content: space-between;
-        }
-
-        button {
-            background-color: transparent;
-            color: var(--gold);
-            border: 1px solid var(--gold);
-            padding: 10px 20px;
-            font-family: 'Courier New', Courier, monospace;
-            font-weight: bold;
-            cursor: pointer;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            transition: all 0.3s;
-            border-radius: 3px;
-        }
-
-        button:hover {
-            background-color: var(--gold);
-            color: var(--dark-slate);
-            box-shadow: 0 0 12px rgba(214, 175, 55, 0.4);
-        }
-
-        .hint {
-            font-size: 11px;
-            color: #888;
-            margin-top: 15px;
-            text-align: center;
-        }
+        body { font-family: 'Space Grotesk', sans-serif; background: #09090b; color: #fafafa; }
+        .gold-glow { box-shadow: 0 0 20px rgba(212, 175, 55, 0.15); }
+        .gold-border { border-color: rgba(212, 175, 55, 0.3); }
+        .gold-text { color: #d4af37; }
+        .gold-bg { background: linear-gradient(135deg, #27272a 0%, #18181b 100%); }
+        input::-webkit-outer-spin-button, input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
     </style>
 </head>
-<body>
+<body class="p-4 md:p-8 min-h-screen">
+    <div class="max-w-7xl mx-auto space-y-6">
+        
+        <div class="gold-bg gold-border border rounded-xl p-6 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 gold-glow">
+            <div>
+                <h1 class="text-xs font-bold tracking-widest gold-text uppercase">Internal System Engine</h1>
+                <h2 class="text-2xl md:text-3xl font-bold tracking-tight">THE M.O.E. GROUP</h2>
+                <p class="text-xs text-zinc-400 mt-1">HBL Ascension Model & Dynamic Downline Forge</p>
+            </div>
+            <div class="flex flex-wrap gap-3 items-center w-full md:w-auto">
+                <div class="flex flex-col">
+                    <label class="text-[10px] uppercase text-zinc-400 font-bold mb-1">Target Timeline</label>
+                    <select id="sysMonth" class="bg-zinc-900 border border-zinc-800 rounded px-3 py-1.5 text-sm font-medium text-zinc-200 focus:outline-none focus:border-yellow-600" onchange="calculateSystemValues()">
+                        <option value="January">January</option><option value="February">February</option>
+                        <option value="March">March</option><option value="April">April</option>
+                        <option value="May" selected>May</option><option value="June">June</option>
+                        <option value="July">July</option><option value="August">August</option>
+                        <option value="September">September</option><option value="October">October</option>
+                        <option value="November">November</option><option value="December">December</option>
+                    </select>
+                </div>
+                <div class="flex flex-col">
+                    <label class="text-[10px] uppercase text-zinc-400 font-bold mb-1">Year</label>
+                    <input type="number" id="sysYear" value="2026" class="w-20 bg-zinc-900 border border-zinc-800 rounded px-3 py-1 text-sm font-medium text-zinc-200 text-center focus:outline-none focus:border-yellow-600" oninput="calculateSystemValues()">
+                </div>
+                <div class="bg-zinc-900/50 border border-zinc-800/80 px-4 py-2 rounded-lg ml-auto md:ml-0">
+                    <div class="text-[9px] uppercase tracking-wider text-zinc-400 font-bold">Your Status</div>
+                    <div class="text-sm font-bold text-emerald-400 flex items-center gap-1.5">
+                        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                        50% Supervisor (Sovereign)
+                    </div>
+                </div>
+            </div>
+        </div>
 
-<div class="container">
-    <div class="header">
-        <h1>THE M.O.E. GROUP</h1>
-        <p>ORGANIZATIONAL SYSTEM TRACKER // DOWNLINE FORGE</p>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            <div class="bg-zinc-900/40 border border-zinc-800/80 rounded-xl p-4">
+                <div class="text-[10px] uppercase tracking-wider font-bold text-zinc-400">Total Downline Volume</div>
+                <div id="metricTotalDLV" class="text-3xl font-bold mt-1">0 <span class="text-xs text-zinc-500 font-normal">VP</span></div>
+                <div class="text-[11px] text-zinc-500 mt-2 flex items-center justify-between">
+                    <span>Organizational Track</span>
+                    <span id="timelineLabel" class="gold-text font-medium">May 2026</span>
+                </div>
+            </div>
+            <div class="bg-zinc-900/40 border border-zinc-800/80 rounded-xl p-4">
+                <div class="text-[10px] uppercase tracking-wider font-bold text-zinc-400">Wholesale Commission</div>
+                <div id="metricWholesaleYield" class="text-3xl font-bold mt-1 text-emerald-400">RM 0.00</div>
+                <div class="text-[11px] text-zinc-500 mt-2">Dynamic differential split yield</div>
+            </div>
+            <div class="bg-zinc-900/40 border border-zinc-800/80 rounded-xl p-4">
+                <div class="text-[10px] uppercase tracking-wider font-bold text-zinc-400">Total Supervisor Gap</div>
+                <div id="metricTotalGap" class="text-3xl font-bold mt-1 text-amber-500">0 <span class="text-xs text-zinc-500 font-normal">VP</span></div>
+                <div class="text-[11px] text-zinc-500 mt-2">Remaining to global 50% line</div>
+            </div>
+            <div class="bg-zinc-900/40 border border-zinc-800/80 rounded-xl p-4">
+                <div class="text-[10px] uppercase tracking-wider font-bold text-zinc-400">Royalty Override Status</div>
+                <div id="metricRoyaltyStatus" class="text-lg font-bold mt-2 text-zinc-400">STANDBY</div>
+                <div class="text-[11px] text-zinc-500 mt-1">Unlocks at 2,500 PPV target</div>
+            </div>
+        </div>
+
+        <div class="bg-zinc-900/20 border border-zinc-800/80 rounded-xl overflow-hidden">
+            <div class="p-4 border-b border-zinc-800 bg-zinc-900/40 flex justify-between items-center">
+                <h3 class="text-xs font-bold tracking-wider text-zinc-300 uppercase">Interactive Node Matrix</h3>
+                <button onclick="addNewNode()" class="text-xs font-bold bg-zinc-800 border border-zinc-700 hover:border-yellow-600/50 hover:bg-zinc-800/80 px-3 py-1.5 rounded transition">
+                    + Add New Partner Node
+                </button>
+            </div>
+            <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse">
+                    <thead>
+                        <tr class="border-b border-zinc-800 text-[10px] uppercase tracking-wider text-zinc-400 font-bold bg-zinc-900/10">
+                            <th class="p-4">Partner Node</th>
+                            <th class="p-4">Current Tier</th>
+                            <th class="p-4">Current Month PPV</th>
+                            <th class="p-4">Target June Goal</th>
+                            <th class="p-4 text-center">Supervisor Gap</th>
+                            <th class="p-4">Velocity Status</th>
+                            <th class="p-4 text-right">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="nodeTableBody">
+                        </tbody>
+                </table>
+            </div>
+        </div>
     </div>
 
-    <table id="forgeTable">
-        <thead>
-            <tr>
-                <th>Partner Name</th>
-                <th>Current Tier</th>
-                <th>May PPV (VP)</th>
-                <th>June Goal (VP)</th>
-                <th>Supervisor Gap (VP)</th>
-                <th>Velocity Status / Progress</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td><input type="text" class="editable" value="Partner A"></td>
-                <td>
-                    <select class="editable editable-select" onchange="calculateForge()">
-                        <option value="25">25% (Distributor)</option>
-                        <option value="35" selected>35% (Senior Consultant)</option>
-                        <option value="42">42% (Success Builder/QP)</option>
-                        <option value="50">50% (Supervisor)</option>
-                    </select>
-                </td>
-                <td><input type="number" class="editable vp-input may-ppv" value="500" oninput="calculateForge()"></td>
-                <td><input type="number" class="editable vp-input june-goal" value="1500" oninput="calculateForge()"></td>
-                <td class="gap-display">3500</td>
-                <td>
-                    <span class="status-badge status-standard">Consolidated Steady</span>
-                    <div class="progress-bar-container"><div class="progress-bar"></div></div>
-                </td>
-            </tr>
-            <tr>
-                <td><input type="text" class="editable" value="Partner B"></td>
-                <td>
-                    <select class="editable editable-select" onchange="calculateForge()">
-                        <option value="25">25% (Distributor)</option>
-                        <option value="35">35% (Senior Consultant)</option>
-                        <option value="42" selected>42% (Success Builder/QP)</option>
-                        <option value="50">50% (Supervisor)</option>
-                    </select>
-                </td>
-                <td><input type="number" class="editable vp-input may-ppv" value="1000" oninput="calculateForge()"></td>
-                <td><input type="number" class="editable vp-input june-goal" value="1500" oninput="calculateForge()"></td>
-                <td class="gap-display">3000</td>
-                <td>
-                    <span class="status-badge status-srank">High-Velocity Ramp</span>
-                    <div class="progress-bar-container"><div class="progress-bar"></div></div>
-                </td>
-            </tr>
-            <tr>
-                <td><input type="text" class="editable" value="Partner C"></td>
-                <td>
-                    <select class="editable editable-select" onchange="calculateForge()">
-                        <option value="25">25% (Distributor)</option>
-                        <option value="35">35% (Senior Consultant)</option>
-                        <option value="42" selected>42% (Success Builder/QP)</option>
-                        <option value="50">50% (Supervisor)</option>
-                    </select>
-                </td>
-                <td><input type="number" class="editable vp-input may-ppv" value="1000" oninput="calculateForge()"></td>
-                <td><input type="number" class="editable vp-input june-goal" value="1500" oninput="calculateForge()"></td>
-                <td class="gap-display">3000</td>
-                <td>
-                    <span class="status-badge status-srank">High-Velocity Ramp</span>
-                    <div class="progress-bar-container"><div class="progress-bar"></div></div>
-                </td>
-            </tr>
-            <tr class="totals-row">
-                <td>TOTALS</td>
-                <td>-</td>
-                <td id="totalMay">2,500</td>
-                <td id="totalJune">4,500</td>
-                <td id="totalGap">9,500</td>
-                <td><span class="status-badge status-standard" id="overallStatus" style="border-color: var(--gold); color: var(--gold)">ACTIVE ROADMAP</span></td>
-            </tr>
-        </tbody>
-    </table>
+    <script>
+        // CORE TRACKING ARCHITECTURE DATA STORAGE
+        let nodes = [
+            { id: 1, name: "Partner A", tier: 35, p_volume: 500, g_volume: 1500 },
+            { id: 2, name: "Partner B", tier: 42, p_volume: 1000, g_volume: 1500 },
+            { id: 3, name: "Partner C", tier: 42, p_volume: 1000, g_volume: 1500 }
+        ];
 
-    <div class="controls">
-        <button onclick="addNewRow()">+ Add New Node</button>
-        <button onclick="triggerConfetti()">Simulate Success</button>
-    </div>
-    
-    <div class="hint">* Click any dark input block or dropdown arrow to update values in real time. Dynamic progress engines recalculate instantly.</div>
-</div>
+        const wholesaleValuePerVP = 3.50; // Reference margin basis index (RM)
 
-<script>
-    function calculateForge() {
-        const rows = document.querySelectorAll("#forgeTable tbody tr:not(.totals-row)");
-        let totalMay = 0;
-        let totalJune = 0;
-        let totalGap = 0;
-        let milestoneReached = false;
+        function generateNodeRows() {
+            const tableBody = document.getElementById('nodeTableBody');
+            tableBody.innerHTML = '';
 
-        rows.forEach(row => {
-            const mayPPV = parseFloat(row.querySelector(".may-ppv").value) || 0;
-            const juneGoal = parseFloat(row.querySelector(".june-goal").value) || 0;
-            const tierSelect = row.querySelector(".editable-select");
-            const currentTier = parseInt(tierSelect.value);
-            
-            // Auto-Calculations
-            const supervisorGap = Math.max(0, 4000 - mayPPV);
-            row.querySelector(".gap-display").textContent = supervisorGap;
+            nodes.forEach((node, index) => {
+                const supervisorGap = Math.max(0, 4000 - node.p_volume);
+                let velocityColor = "text-zinc-400";
+                let velocityText = "Consolidated Steady";
 
-            totalMay += mayPPV;
-            totalJune += juneGoal;
-            totalGap += supervisorGap;
+                if (node.p_volume >= 1000) {
+                    velocityColor = "text-emerald-400 bg-emerald-950/30 border-emerald-900/50";
+                    velocityText = "⚡ S-Rank Velocity";
+                } else if (node.p_volume >= 500) {
+                    velocityColor = "text-amber-400 bg-amber-950/30 border-amber-900/50";
+                    velocityText = "🛡️ Standard Tracking";
+                } else {
+                    velocityColor = "text-red-400 bg-red-950/30 border-red-900/50";
+                    velocityText = "⚠️ Action Required";
+                }
 
-            // Gamified Status & Progress Calculation
-            const progressPercent = Math.min(100, (mayPPV / 4000) * 100);
-            const progressBar = row.querySelector(".progress-bar");
-            progressBar.style.width = progressPercent + "%";
+                const row = document.createElement('tr');
+                row.className = "border-b border-zinc-800/60 hover:bg-zinc-900/10 transition";
+                row.innerHTML = `
+                    <td class="p-4 font-medium text-zinc-100">
+                        <input type="text" value="${node.name}" onchange="updateNodeData(${node.id}, 'name', this.value)" class="bg-transparent border-b border-transparent hover:border-zinc-700 focus:border-yellow-600 focus:outline-none pb-0.5 text-sm font-semibold w-full text-zinc-200">
+                    </td>
+                    <td class="p-4">
+                        <select onchange="updateNodeData(${node.id}, 'tier', this.value)" class="bg-zinc-900 border border-zinc-800 rounded px-2 py-1 text-xs font-semibold focus:outline-none focus:border-yellow-600 text-zinc-300">
+                            <option value="25" ${node.tier == 25 ? 'selected' : ''}>25% Tier</option>
+                            <option value="35" ${node.tier == 35 ? 'selected' : ''}>35% Tier</option>
+                            <option value="42" ${node.tier == 42 ? 'selected' : ''}>42% Tier</option>
+                            <option value="50" ${node.tier == 50 ? 'selected' : ''}>50% Supervisor</option>
+                        </select>
+                    </td>
+                    <td class="p-4">
+                        <div class="flex items-center gap-1.5">
+                            <input type="number" value="${node.p_volume}" oninput="updateNodeData(${node.id}, 'p_volume', this.value)" class="w-20 bg-zinc-900 border border-zinc-800 rounded px-2 py-1 text-xs font-bold text-zinc-200 focus:outline-none focus:border-yellow-600 text-center">
+                            <span class="text-[10px] text-zinc-500 font-medium">VP</span>
+                        </div>
+                    </td>
+                    <td class="p-4">
+                        <div class="flex items-center gap-1.5">
+                            <input type="number" value="${node.g_volume}" oninput="updateNodeData(${node.id}, 'g_volume', this.value)" class="w-20 bg-zinc-900 border border-zinc-800 rounded px-2 py-1 text-xs font-medium text-zinc-400 focus:outline-none focus:border-yellow-600 text-center">
+                            <span class="text-[10px] text-zinc-600">VP</span>
+                        </div>
+                    </td>
+                    <td class="p-4 text-center font-mono text-xs font-bold ${supervisorGap > 0 ? 'text-amber-500' : 'text-emerald-400'}">
+                        ${supervisorGap === 0 ? 'COMPLETED' : supervisorGap.toLocaleString() + ' VP'}
+                    </td>
+                    <td class="p-4">
+                        <span class="px-2 py-1 text-[10px] font-bold border rounded-md uppercase ${velocityColor}">
+                            ${velocityText}
+                        </span>
+                    </td>
+                    <td class="p-4 text-right">
+                        <button onclick="removeNode(${node.id})" class="text-zinc-600 hover:text-red-400 transition text-xs font-semibold px-2 py-1">
+                            Delete
+                        </button>
+                    </td>
+                `;
+                tableBody.appendChild(row);
+            });
+            calculateSystemValues();
+        }
 
-            const statusBadge = row.querySelector(".status-badge");
-            
-            if (currentTier === 50 || mayPPV >= 4000) {
-                statusBadge.textContent = "SUPERVISOR LOCK";
-                statusBadge.className = "status-badge status-srank";
-                statusBadge.style.borderColor = "var(--neon-green)";
-                tierSelect.value = "50";
-                row.querySelector(".gap-display").textContent = "0";
-            } else if (mayPPV >= 1000) {
-                statusBadge.textContent = "S-RANK VELOCITY";
-                statusBadge.className = "status-badge status-srank";
-            } else if (mayPPV >= 500) {
-                statusBadge.textContent = "STANDARD TRACKING";
-                statusBadge.className = "status-badge status-standard";
-            } else {
-                statusBadge.textContent = "REQ INTERVENTION";
-                statusBadge.className = "status-badge status-warn";
+        function updateNodeData(id, key, value) {
+            let targetNode = nodes.find(n => n.id === id);
+            if (targetNode) {
+                if (key === 'p_volume' || key === 'g_volume' || key === 'tier') {
+                    targetNode[key] = parseFloat(value) || 0;
+                    if (key === 'p_volume' && targetNode.p_volume >= 4000) {
+                        targetNode.tier = 50;
+                    }
+                } else {
+                    targetNode[key] = value;
+                }
             }
-        });
+            if (key === 'p_volume' || key === 'tier') {
+                generateNodeRows();
+            } else {
+                calculateSystemValues();
+            }
+        }
 
-        // Update Table Footer Values
-        document.getElementById("totalMay").textContent = totalMay.toLocaleString();
-        document.getElementById("totalJune").textContent = totalJune.toLocaleString();
-        document.getElementById("totalGap").textContent = totalGap.toLocaleString();
-    }
+        function addNewNode() {
+            const newId = nodes.length > 0 ? Math.max(...nodes.map(n => n.id)) + 1 : 1;
+            nodes.push({
+                id: newId,
+                name: `Partner ${String.fromCharCode(65 + nodes.length)}`,
+                tier: 25,
+                p_volume: 0,
+                g_volume: 1500
+            });
+            generateNodeRows();
+        }
 
-    function addNewRow() {
-        const tableBody = document.querySelector("#forgeTable tbody");
-        const totalsRow = document.querySelector(".totals-row");
-        const newRow = document.createElement("tr");
+        function removeNode(id) {
+            nodes = nodes.filter(n => n.id !== id);
+            generateNodeRows();
+        }
 
-        newRow.innerHTML = `
-            <td><input type="text" class="editable" value="New Node"></td>
-            <td>
-                <select class="editable editable-select" onchange="calculateForge()">
-                    <option value="25" selected>25% (Distributor)</option>
-                    <option value="35">35% (Senior Consultant)</option>
-                    <option value="42">42% (Success Builder/QP)</option>
-                    <option value="50">50% (Supervisor)</option>
-                </select>
-            </td>
-            <td><input type="number" class="editable vp-input may-ppv" value="0" oninput="calculateForge()"></td>
-            <td><input type="number" class="editable vp-input june-goal" value="1000" oninput="calculateForge()"></td>
-            <td class="gap-display">4000</td>
-            <td>
-                <span class="status-badge status-warn">REQ INTERVENTION</span>
-                <div class="progress-bar-container"><div class="progress-bar"></div></div>
-            </td>
-        `;
+        function calculateSystemValues() {
+            let totalDLV = 0;
+            let totalWholesaleEarnings = 0;
+            let totalSupervisorGap = 0;
 
-        tableBody.insertBefore(newRow, totalsRow);
-        calculateForge();
-    }
+            nodes.forEach(node => {
+                totalDLV += node.p_volume;
+                totalSupervisorGap += Math.max(0, 4000 - node.p_volume);
+                
+                // Wholesale differential logic engine (50% Supervisor tier - Partner Tier)
+                const marginDifferential = Math.max(0, (50 - node.tier) / 100);
+                totalWholesaleEarnings += (node.p_volume * wholesaleValuePerVP * marginDifferential);
+            });
 
-    function triggerConfetti() {
-        confetti({
-            particleCount: 150,
-            spread: 80,
-            origin: { y: 0.6 },
-            colors: ['#D4AF37', '#39FF14', '#ffffff']
-        });
-    }
+            // Update Metrics Display
+            document.getElementById('metricTotalDLV').innerHTML = `${totalDLV.toLocaleString()} <span class="text-xs text-zinc-500 font-normal">VP</span>`;
+            document.getElementById('metricWholesaleYield').innerText = `RM ${totalWholesaleEarnings.toFixed(2)}`;
+            document.getElementById('metricTotalGap').innerHTML = `${totalSupervisorGap.toLocaleString()} <span class="text-xs text-zinc-500 font-normal">VP</span>`;
 
-    // Run calculations on initial load
-    window.onload = calculateForge;
-</script>
+            const currentMonth = document.getElementById('sysMonth').value;
+            const currentYear = document.getElementById('sysYear').value;
+            document.getElementById('timelineLabel').innerText = `${currentMonth} ${currentYear}`;
 
+            const royaltyMetric = document.getElementById('metricRoyaltyStatus');
+            if (totalDLV >= 2500) {
+                royaltyMetric.innerText = "ACTIVE ELIGIBLE";
+                royaltyMetric.className = "text-lg font-bold mt-2 text-emerald-400";
+            } else {
+                royaltyMetric.innerText = "STANDBY (MIN 2.5K)";
+                royaltyMetric.className = "text-xs font-bold mt-2 text-zinc-500 tracking-wider";
+            }
+        }
+
+        // Initialize App on load
+        generateNodeRows();
+    </script>
 </body>
 </html>
