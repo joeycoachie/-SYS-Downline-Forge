@@ -49,7 +49,18 @@
                 </div>
             </div>
         </div>
-
+    </head>
+<div class="flex flex-col">
+    <label class="text-[10px] uppercase text-zinc-400 font-bold mb-1">Month</label>
+    <select id="sysMonth" class="bg-zinc-900 border border-zinc-800 rounded px-3 py-1.5 text-sm font-medium text-zinc-200 focus:outline-none focus:border-yellow-600" onchange="calculateSystemValues()">
+        <option value="January">January</option><option value="February">February</option>
+        <option value="March">March</option><option value="April">April</option>
+        <option value="May" selected>May</option><option value="June">June</option>
+        <option value="July">July</option><option value="August">August</option>
+        <option value="September">September</option><option value="October">October</option>
+        <option value="November">November</option><option value="December">December</option>
+    </select>
+</div>
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             <div class="bg-zinc-900/40 border border-zinc-800/80 rounded-xl p-4">
                 <div class="text-[10px] uppercase tracking-wider font-bold text-zinc-400">Total Downline Volume</div>
